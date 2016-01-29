@@ -1,0 +1,34 @@
+<html>
+	<head>
+		<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+	</head>
+	<body>
+		<div id="image"></div>
+		<script>
+			$(function(){
+				$.get('/surf.jimg', function(data){
+					draw(JSON.parse(data));
+				});
+			});
+		
+			function draw(image){
+				var img = $('#image');
+				img.attr('style', 'width:' + image.Width + 'px;height:' + image.Height + ";");
+
+				var colors = image.ColorCoords.length;
+				debugger;
+
+				for(var cC = 0; cC < colors; cC++) {
+					var coords = image.ColorCoords[cC].Coords.length;
+
+					for(var c = 0; c < coords; c++){
+						var p = document.createElement('div');
+						p.setAttribute('style', 'background:rgb(' + image.ColorCoords[cC].RGB + '); width: 1px; height: 1px;position:absolute;top:'+image.ColorCoords[cC].Coords[c].X+'px;left:'+image.ColorCoords[cC].Coords[c].Y+'px');
+
+						img.append(p);
+					}
+				}
+			}
+		</script>
+	</body>
+</html>
